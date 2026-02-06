@@ -1,11 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CRUD de Clientes</title>
 </head>
 <body>
-    <h1>Hola mundo</h1>
+    <h1>Listado de clientes</h1>
+	<hr />
+	
+	<table>
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th>Apellido</th>
+				<th>Email</th>
+				<th>Fecha de creación</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="cliente: ${clientes}">
+				<td th:text="${cliente.nombre}"></td>
+				<td th:text="${cliente.apellido}"></td>
+				<td th:text="${cliente.email}"></td>
+				<td th:text="${cliente.fechaCreacion}"></td>
+			</tr>
+		</tbody>
+	</table>
 </body>
 </html>
