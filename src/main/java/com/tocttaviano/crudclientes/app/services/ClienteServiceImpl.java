@@ -31,5 +31,10 @@ public class ClienteServiceImpl implements IClienteService {
 	public Optional<Cliente> buscarPorId(Long id) {
 		return clienteRepository.findById(id);
 	}
+	
+	@Override
+	public void eliminar(Long id) {
+		clienteRepository.deleteById(id);
+	}
 
 }

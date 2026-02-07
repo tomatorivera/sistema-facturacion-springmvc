@@ -71,4 +71,21 @@ public class ClienteController {
 			return "clienteForm";
 		}
 	}
+	
+	@GetMapping("/eliminar/{id}")
+	public String eliminar(@PathVariable Long id) {
+		Optional<Cliente> optCliente = clienteService.buscarPorId(id);
+		if (optCliente.isEmpty()) {
+			logger.warn("Cliente con ID " + id + " no encontrado para eliminación.");
+			return "redirect:/index";
+		}
+		
+		try {
+			clienteService.eliminar(id);
+			return "redirect:/index";
+		} catch (Exception e) {
+			logger.error("Error al eliminar el cliente: " + e.getMessage());
+			return "redirect:/index";
+		}
+	}
 }

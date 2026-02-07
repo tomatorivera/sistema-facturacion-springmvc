@@ -9,4 +9,5 @@ public interface IClienteService {
 	List<Cliente> listar();
 	Cliente guardar(Cliente cliente);
 	Optional<Cliente> buscarPorId(Long id);
+	void eliminar(Long id);
 }
