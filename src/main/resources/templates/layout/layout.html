@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD de Clientes</title>
+	
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
+		  rel="stylesheet" 
+		  integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+		  crossorigin="anonymous">
+</head>
+<body>
+	<nav class="navbar bg-dark border-bottom border-body navbar-expand-lg" data-bs-theme="dark" th:fragment="navbar">
+	  <section class="container">
+	    <a class="navbar-brand" href="#">CLIENTES-MVC</a>
+	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#clientesNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	    </button>
+	    <div class="collapse navbar-collapse" id="clientesNav">
+	      <ul class="navbar-nav">
+	        <li class="nav-item">
+	          <a class="nav-link" th:href="@{/index}">Inicio</a>
+	        </li>
+	        <li class="nav-item">
+	          <a class="nav-link" th:href="@{/crear}">Nuevo cliente</a>
+	        </li>
+	      </ul>
+	    </div>
+	  </section>
+	</nav>
+	
+    <header class="container mt-1 mb-4" th:fragment="header">
+		<h1 class="text-start py-3 border-bottom" th:text="${tituloPagina}"></h1>
+	</header>
+	
+	<main class="container my-3" th:fragment="main">
+        <div th:insert="${contenido}"></div>
+	</main>
+	
+	<footer class="bg-dark text-light text-center py-3 mt-5" th:fragment="footer">
+        <p class="mb-0">By Tomas Octtaviano</p>
+	</footer>
+	
+	<section th:fragment="scripts">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
+				integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
+				crossorigin="anonymous">
+		</script>
+	</section>
+</body>
+</html>

@@ -33,12 +33,14 @@ public class ClienteController {
 	@GetMapping({"/", "/index", "/listar"})
 	public String listar(Model model) {
 		model.addAttribute("clientes", clienteService.listar());
+		model.addAttribute("tituloPagina", "Listado de clientes");
 		return "index";
 	}
 	
 	@GetMapping("/crear")
 	public String crear(Model model) {
 		model.addAttribute("cliente", new Cliente());
+		model.addAttribute("tituloPagina", "Agregar cliente");
 		return "clienteForm";
 	}
 	
@@ -53,14 +55,17 @@ public class ClienteController {
 		Cliente cliente = optCliente.get();
 		logger.info("Cliente encontrado para edición: " + cliente);
 		model.addAttribute("cliente", cliente);
+		model.addAttribute("tituloPagina", "Editar cliente");
 		return "clienteForm";
 	}
 	
 	@PostMapping("/guardar")
-	public String guardar(@Valid Cliente cliente, BindingResult result, SessionStatus status) {
+	public String guardar(@Valid Cliente cliente, BindingResult result, SessionStatus status, Model model) {
 		logger.info("Cliente entrante: " + cliente);
-		if(result.hasErrors())
+		if(result.hasErrors()) {
+			model.addAttribute("tituloPagina", (cliente.getId() != null && cliente.getId() > 0) ? "Editar cliente" : "Agregar cliente");
 			return "clienteForm";
+		}
 		
 		try {
 			clienteService.guardar(cliente);
@@ -80,12 +85,7 @@ public class ClienteController {
 			return "redirect:/index";
 		}
 		
-		try {
-			clienteService.eliminar(id);
-			return "redirect:/index";
-		} catch (Exception e) {
-			logger.error("Error al eliminar el cliente: " + e.getMessage());
-			return "redirect:/index";
-		}
+		clienteService.eliminar(id);
+		return "redirect:/index";
 	}
 }
