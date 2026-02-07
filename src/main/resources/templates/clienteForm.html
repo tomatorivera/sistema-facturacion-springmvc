@@ -18,7 +18,7 @@
 	</header>
 	
 	<main class="container mt-3">
-		<form id="form-crear-cliente" th:action="@{/crear}" th:object="${cliente}" method="POST">
+		<form id="form-cliente" th:action="@{/guardar}" th:object="${cliente}" method="POST">
 			<section class="mb-3">
 				<label for="nombre" class="form-label">Nombre:</label>
 				<input th:field="*{nombre}" class="form-control" required maxlength="45" />

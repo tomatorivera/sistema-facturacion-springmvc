@@ -1,6 +1,7 @@
 package com.tocttaviano.crudclientes.app.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,11 @@ public class ClienteServiceImpl implements IClienteService {
 	@Override
 	public Cliente guardar(Cliente cliente) {
 		return clienteRepository.save(cliente);
+	}
+	
+	@Override
+	public Optional<Cliente> buscarPorId(Long id) {
+		return clienteRepository.findById(id);
 	}
 
 }
