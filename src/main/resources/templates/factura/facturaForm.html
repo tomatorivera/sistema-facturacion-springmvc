@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{layout/layout :: head}"></head>
+<body>
+	<section th:insert="~{layout/layout :: navbar}"></section>
+	<section th:insert="~{layout/layout :: header}"></section>
+	
+	<main class="container mt-3">
+		<form id="form-factura" th:action="@{/factura/guardar/}" th:object="${factura}" method="POST">
+			<p class="alert alert-info mb-4">Cliente: <strong th:text="${factura.cliente.nombre} + ' ' + ${factura.cliente.apellido}"></strong></p>
+			
+            <section class="mb-3">
+                <label for="descripcion" class="form-label">Descripción:</label>
+                <input th:field="*{descripcion}" class="form-control" />
+                <!--<span th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}" class="text-danger"></span>-->
+            </section>
+			
+			<section class="mb-3">
+                <label for="observacion" class="form-label">Observaciones:</label>
+                <textarea th:field="*{observacion}" class="form-control"></textarea>
+                <!--<span th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}" class="text-danger"></span>-->
+            </section>
+            
+           <!-- <section class="mb-3">
+                <label for="cliente" class="form-label">Cliente:</label>
+                <select th:field="*{cliente.id}" class="form-select" required>
+                    <option value="" disabled>Seleccione un cliente</option>
+                    <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nombre} + ' ' + ${cliente.apellido}"></option>
+                </select>
+                <span th:if="${#fields.hasErrors('cliente')}" th:errors="*{cliente}" class="text-danger"></span>
+            </section>-->
+            
+            <section class="d-flex align-items-center">
+				<input type="submit" th:value="${(factura.id != null && factura.id > 0) ? 'Editar factura' : 'Agregar factura'}" class="btn btn-primary" />
+				<a th:href="@{/listar}" class="btn btn-outline-primary ms-2">Volver al listado</a>
+			</section>
+		</form>
+	</main>
+	
+	<section th:insert="~{layout/layout :: footer}"></section>
+	<section th:insert="~{layout/layout :: scripts}"></section>
+</body>	
+</html>
