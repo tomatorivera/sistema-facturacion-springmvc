@@ -97,5 +97,11 @@ public class ClienteServiceImpl implements IClienteService {
 	public Optional<Producto> buscarProductoPorId(Long id) {
 		return productoRepository.findById(id);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Optional<Factura> buscarFacturaPorId(Long id) {
+		return facturaRepository.findById(id);
+	}
 
 }

@@ -107,4 +107,19 @@ public class FacturaController {
 		return "redirect:/listar";
 	}
 	
+	@GetMapping("/detalle/{id}")
+	public String detalle(@PathVariable Long id, Model model, RedirectAttributes mensajeria) {
+		Optional<Factura> optFactura = clienteService.buscarFacturaPorId(id);
+		if (optFactura.isEmpty()) {
+			mensajeria.addFlashAttribute("mensajeError", "No se ha encontrado la factura especificada");
+			return "redirect:/listar";
+		}
+		
+		model.addAttribute("tituloPagina", "Detalle de factura");
+		model.addAttribute("factura", optFactura.get());
+		
+		return "factura/detalle";
+		
+	}
+	
 }
