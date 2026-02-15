@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="~{layout/layout :: head}"></head>
 <body>
     <section th:insert="~{layout/layout :: navbar}"></section>
@@ -8,7 +9,7 @@
 	
 	<main class="container my-3">
 		<section class="d-flex flex-column gap-3">
-			<section class="d-flex justify-content-end align-items-center">
+			<section sec:authorize="hasRole('ROLE_ADMIN')" class="d-flex justify-content-end align-items-center">
 				<a th:href="@{/crear}" class="btn btn-primary">+ Agregar cliente</a>
 			</section>
 			
@@ -21,10 +22,10 @@
 							<th>Email</th>
 							<th>Fecha de creación</th>
 							<th colspan="3">Acciones</th>
-							<th>Facturas</th>
+							<th sec:authorize="hasRole('ROLE_ADMIN')">Facturas</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody class="text-center align-middle">
 						<tr th:each="cliente: ${clientes.content}">
 							<td th:text="${cliente.nombre}"></td>
 							<td th:text="${cliente.apellido}"></td>
@@ -33,13 +34,13 @@
 							<td>
 								<a th:href="@{/detalle/} + ${cliente.id}" class="btn btn-primary">Ver detalle</a>
 							</td>
-							<td>
+							<td sec:authorize="hasRole('ROLE_ADMIN')">
 								<a th:href="@{/editar/} + ${cliente.id}" class="btn btn-warning">Editar cliente</a>
 							</td>
-							<td>
+							<td sec:authorize="hasRole('ROLE_ADMIN')">
 								<a th:href="@{/eliminar/} + ${cliente.id}" class="btn btn-danger" onclick="return confirm('Está seguro de que desea eliminar?')">Eliminar cliente</a>
 							</td>
-							<td>
+							<td sec:authorize="hasRole('ROLE_ADMIN')">
 								<a th:href="@{/factura/crear/} + ${cliente.id}" class="btn btn-success">Crear factura</a>
 							</td>
 						</tr>
