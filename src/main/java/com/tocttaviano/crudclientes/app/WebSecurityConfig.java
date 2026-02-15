@@ -71,7 +71,12 @@ public class WebSecurityConfig {
 		                .requestMatchers("/factura/**").hasAnyRole("ADMIN")
 		                .anyRequest().authenticated()
          )
-         .formLogin(login -> login.permitAll())
+		 // Formulario y permisos para login
+         .formLogin(login -> {
+        	 login.loginPage("/login").permitAll();
+        	 login.defaultSuccessUrl("/", true);
+         })
+         // Permisos para logout
          .logout(logout -> logout.permitAll());
 		 
 		return http.build();
