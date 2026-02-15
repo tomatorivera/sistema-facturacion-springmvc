@@ -16,7 +16,8 @@ public class LoginController {
 			Model model, 
 			Principal principal, 
 			RedirectAttributes mensajeria,
-			@RequestParam(required = false) String error
+			@RequestParam(required = false) String error,
+			@RequestParam(required = false) String logout
 	){
 		// Si el usuario ya ha iniciado sesión, redirige a la página de inicio
 		if (principal != null) {
@@ -27,6 +28,11 @@ public class LoginController {
 		// Si se ha producido un error de autenticación, muestra un mensaje de error
 		if (error != null) {
 			model.addAttribute("mensajeError", "Credenciales incorrectas. Inténtalo de nuevo.");
+		}
+		
+		// Si llega la bandera de logout, cierro sesión del usuario
+		if (logout != null) {
+			model.addAttribute("mensajeExito", "Has cerrado sesión correctamente.");
 		}
 		
 		return "auth/login";
