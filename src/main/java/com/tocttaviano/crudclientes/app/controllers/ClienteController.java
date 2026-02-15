@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,6 +43,11 @@ public class ClienteController {
 			@RequestParam(defaultValue="5") int tamanioPagina,
 			Model model) 
 	{	
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null) {
+			logger.info("Usuario autenticado: " + auth.getName());
+		}
+		
 		Page<Cliente> paginaClientes = clienteService.listarPaginado(numeroPagina, tamanioPagina); // <- Obtengo la página
 		
 		model.addAttribute("tituloPagina", "Listado de clientes");

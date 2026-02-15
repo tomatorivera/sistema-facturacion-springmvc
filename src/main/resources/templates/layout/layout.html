@@ -25,7 +25,7 @@
 	        <li class="nav-item">
 	          <a class="nav-link" th:href="@{/index}">Inicio</a>
 	        </li>
-	        <li class="nav-item">
+	        <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
 	          <a class="nav-link" th:href="@{/crear}">Nuevo cliente</a>
 	        </li>
 	      </ul>

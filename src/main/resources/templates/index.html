@@ -21,7 +21,7 @@
 							<th>Apellido</th>
 							<th>Email</th>
 							<th>Fecha de creación</th>
-							<th colspan="3">Acciones</th>
+							<th sec:authorize="hasRole('ROLE_USER')" colspan="3">Acciones</th>
 							<th sec:authorize="hasRole('ROLE_ADMIN')">Facturas</th>
 						</tr>
 					</thead>
@@ -30,8 +30,8 @@
 							<td th:text="${cliente.nombre}"></td>
 							<td th:text="${cliente.apellido}"></td>
 							<td th:text="${cliente.email}"></td>
-							<td th:text="${cliente.fechaCreacion}"></td>
-							<td>
+							<td th:text="${#temporals.format(cliente.fechaCreacion, 'dd/MM/yyyy HH:mm')}"></td>
+							<td sec:authorize="hasRole('ROLE_USER')">
 								<a th:href="@{/detalle/} + ${cliente.id}" class="btn btn-primary">Ver detalle</a>
 							</td>
 							<td sec:authorize="hasRole('ROLE_ADMIN')">
