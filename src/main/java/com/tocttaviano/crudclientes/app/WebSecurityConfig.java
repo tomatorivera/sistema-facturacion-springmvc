@@ -3,13 +3,13 @@ package com.tocttaviano.crudclientes.app;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import com.tocttaviano.crudclientes.app.services.JpaUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -18,13 +18,16 @@ public class WebSecurityConfig {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private JpaUserDetailsService jpaUserDetailsService;
+	
 	/**
 	 * Registro de usuarios en memoria para pruebas. En un entorno de producción, se debería implementar un UserDetailsService
 	 * que consulte una base de datos u otro sistema de almacenamiento.
 	 * 
 	 * @return Un UserDetailsService con usuarios registrados en memoria.
 	 * @throws Exception Si ocurre un error al crear el UserDetailsService.
-	 */
+	 *
 	@Bean
 	UserDetailsService userDetailsService() throws Exception {
 		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
@@ -47,6 +50,18 @@ public class WebSecurityConfig {
 		
 		return manager;
 	}
+	 */
+	
+	/**
+	 * Configuración del AuthenticationManagerBuilder para utilizar un UserDetailsService personalizado (JpaUserDetailsService)
+	 * 
+	 * @param build
+	 * @throws Exception
+	 */
+	@Autowired
+    public void userDetailsService(AuthenticationManagerBuilder build) throws Exception {
+       build.userDetailsService(jpaUserDetailsService).passwordEncoder(passwordEncoder);
+    }
 	
 	/**
 	 * Configuración de seguridad HTTP. Define las reglas de acceso a las diferentes rutas de la aplicación, 
