@@ -85,7 +85,7 @@ public class ClienteController {
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
-	@GetMapping("/crear")
+	@GetMapping("/guardar")
 	public String crear(Model model, Locale locale) {
 		model.addAttribute("cliente", new Cliente());
 		model.addAttribute("tituloPagina", messageSource.getMessage("Text.cliente.crear.titulo", null, locale));
@@ -93,7 +93,7 @@ public class ClienteController {
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
-	@GetMapping("/editar/{id}")
+	@GetMapping("/guardar/{id}")
 	public String editar(@PathVariable Long id, Model model, Locale locale) {
 		Optional<Cliente> optCliente = clienteService.buscarPorId(id);
 		if (optCliente.isEmpty()) {

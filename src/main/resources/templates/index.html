@@ -10,7 +10,7 @@
 	<main class="container my-3">
 		<section class="d-flex flex-column gap-3">
 			<section sec:authorize="hasRole('ROLE_ADMIN')" class="d-flex justify-content-end align-items-center">
-				<a th:href="@{/crear}" class="btn btn-primary" th:text="#{Text.cliente.crud.crear}">+ Agregar cliente</a>
+				<a th:href="@{/guardar}" class="btn btn-primary" th:text="#{Text.cliente.crud.crear}">+ Agregar cliente</a>
 			</section>
 			
 			<section class="table-responsive">
@@ -35,7 +35,7 @@
 								<a th:href="@{/detalle/} + ${cliente.id}" class="btn btn-primary" th:text="#{Text.general.detalle}">Ver detalle</a>
 							</td>
 							<td sec:authorize="hasRole('ROLE_ADMIN')">
-								<a th:href="@{/editar/} + ${cliente.id}" class="btn btn-warning" th:text="#{Text.crud.editar}">Editar cliente</a>
+								<a th:href="@{/guardar/} + ${cliente.id}" class="btn btn-warning" th:text="#{Text.crud.editar}">Editar cliente</a>
 							</td>
 							<td sec:authorize="hasRole('ROLE_ADMIN')">
 								<a th:href="@{/eliminar/} + ${cliente.id}" class="btn btn-danger" th:text="#{Text.crud.eliminar}" 

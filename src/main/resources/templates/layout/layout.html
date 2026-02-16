@@ -26,15 +26,19 @@
 	          <a class="nav-link" th:href="@{/index}" th:text="#{Text.nav.inicio}">Inicio</a>
 	        </li>
 	        <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
-	          <a class="nav-link" th:href="@{/crear}" th:text="#{Text.nav.nuevoCliente}">Nuevo cliente</a>
+	          <a class="nav-link" th:href="@{/guardar}" th:text="#{Text.nav.nuevoCliente}">Nuevo cliente</a>
 	        </li>
 			<li class="nav-item dropdown">
 	          <a class="nav-link dropdown-toggle" th:text="#{Text.nav.idioma}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 	            Idioma
 	          </a>
 	          <ul class="dropdown-menu">
-	            <li><a class="dropdown-item" th:href="@{/locale(lang=es_ES)}">Español</a></li>
-	            <li><a class="dropdown-item" th:href="@{/locale(lang=en_EN)}">English</a></li>
+	         <!-- 
+				<li><a class="dropdown-item" th:href="@{/locale(lang=es_ES)}">Español</a></li>
+	            <li><a class="dropdown-item" th:href="@{/locale(lang=en_EN)}">English</a></li> 
+			 -->
+			 	<li><a class="dropdown-item" th:href="@{''(lang=es_ES)}">Español</a></li>
+ 	            <li><a class="dropdown-item" th:href="@{''(lang=en_EN)}">English</a></li> 
 	          </ul>
 	        </li>
 	      </ul>
