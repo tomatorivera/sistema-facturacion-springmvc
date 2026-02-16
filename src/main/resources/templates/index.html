@@ -10,19 +10,19 @@
 	<main class="container my-3">
 		<section class="d-flex flex-column gap-3">
 			<section sec:authorize="hasRole('ROLE_ADMIN')" class="d-flex justify-content-end align-items-center">
-				<a th:href="@{/crear}" class="btn btn-primary">+ Agregar cliente</a>
+				<a th:href="@{/crear}" class="btn btn-primary" th:text="#{Text.cliente.crud.crear}">+ Agregar cliente</a>
 			</section>
 			
 			<section class="table-responsive">
 				<table class="table table-hover table-striped table-bordered w-100">
 					<thead class="table-dark">
 						<tr class="text-center">
-							<th>Nombre</th>
-							<th>Apellido</th>
-							<th>Email</th>
-							<th>Fecha de creación</th>
-							<th sec:authorize="hasRole('ROLE_USER')" colspan="3">Acciones</th>
-							<th sec:authorize="hasRole('ROLE_ADMIN')">Facturas</th>
+							<th th:text="#{Text.cliente.nombre}">Nombre</th>
+							<th th:text="#{Text.cliente.apellido}">Apellido</th>
+							<th th:text="#{Text.cliente.email}">Email</th>
+							<th th:text="#{Text.cliente.fechaCreacion}">Fecha de creación</th>
+							<th sec:authorize="hasRole('ROLE_USER')" colspan="3" th:text="#{Text.general.acciones}">Acciones</th>
+							<th sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{Text.general.facturas}">Facturas</th>
 						</tr>
 					</thead>
 					<tbody class="text-center align-middle">
@@ -32,16 +32,16 @@
 							<td th:text="${cliente.email}"></td>
 							<td th:text="${#temporals.format(cliente.fechaCreacion, 'dd/MM/yyyy HH:mm')}"></td>
 							<td sec:authorize="hasRole('ROLE_USER')">
-								<a th:href="@{/detalle/} + ${cliente.id}" class="btn btn-primary">Ver detalle</a>
+								<a th:href="@{/detalle/} + ${cliente.id}" class="btn btn-primary" th:text="#{Text.general.detalle}">Ver detalle</a>
 							</td>
 							<td sec:authorize="hasRole('ROLE_ADMIN')">
-								<a th:href="@{/editar/} + ${cliente.id}" class="btn btn-warning">Editar cliente</a>
+								<a th:href="@{/editar/} + ${cliente.id}" class="btn btn-warning" th:text="#{Text.crud.editar}">Editar cliente</a>
 							</td>
 							<td sec:authorize="hasRole('ROLE_ADMIN')">
-								<a th:href="@{/eliminar/} + ${cliente.id}" class="btn btn-danger" onclick="return confirm('Está seguro de que desea eliminar?')">Eliminar cliente</a>
+								<a th:href="@{/eliminar/} + ${cliente.id}" class="btn btn-danger" th:text="#{Text.crud.eliminar}" onclick="return confirm('Está seguro de que desea eliminar?')">Eliminar cliente</a>
 							</td>
 							<td sec:authorize="hasRole('ROLE_ADMIN')">
-								<a th:href="@{/factura/crear/} + ${cliente.id}" class="btn btn-success">Crear factura</a>
+								<a th:href="@{/factura/crear/} + ${cliente.id}" class="btn btn-success" th:text="#{Text.factura.crud.crear}">Crear factura</a>
 							</td>
 						</tr>
 					</tbody>
