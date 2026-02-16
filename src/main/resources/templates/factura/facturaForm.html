@@ -8,42 +8,42 @@
 	
 	<main class="container mt-3">
 		<form id="form-factura" th:action="@{/factura/guardar}" th:object="${factura}" method="POST">
-			<p class="alert alert-info mb-4">Cliente: <strong th:text="${factura.cliente.nombre} + ' ' + ${factura.cliente.apellido}"></strong></p>
+			<p class="alert alert-info mb-4"><span th:text="#{Text.factura.cliente} + ':'"></span> <strong th:text="${factura.cliente.nombre} + ' ' + ${factura.cliente.apellido}"></strong></p>
 			
             <section class="mb-3">
-                <label for="descripcion" class="form-label">Descripción:</label>
+                <label for="descripcion" class="form-label" th:text="#{Text.factura.descripcion} + ':'">Descripción:</label>
                 <input th:field="*{descripcion}" class="form-control" required maxlength="200" />
                 <span th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}" class="text-danger"></span>
             </section>
 			
 			<section class="mb-3">
-                <label for="observacion" class="form-label">Observaciones:</label>
+                <label for="observacion" class="form-label" th:text="#{Text.factura.observacion} + ':'"></label>
                 <textarea th:field="*{observacion}" class="form-control" maxlength="200"></textarea>
                 <span th:if="${#fields.hasErrors('observacion')}" th:errors="*{observacion}" class="text-danger"></span>
             </section>
             
            <section class="mb-3">
-                <label for="buscar_producto" class="form-label">Producto:</label>
+                <label for="buscar_producto" class="form-label" th:text="#{Text.producto.nombre} + ':'"></label>
 				<input type="text" id="buscar_producto" name="buscar_producto" class="form-control" placeholder="Ingrese el nombre del producto para buscar..." />
             </section>
 			
 			<section class="mt-4">
 				<table th:replace="~{factura/plantilla-items :: items-factura}"></table>
 				<table id="cargar-item-productos" class="table table-sm table-striped table-hover">
-					<legend class="fs-6">Productos de la factura:</legend>
+					<legend class="fs-6" th:text="#{Text.factura.listadoProductos} + ':'">Productos de la factura:</legend>
 					<thead>
 						<tr class="table-dark">
-							<th>Nombre del producto</th>
-	                        <th>Precio</th>
-	                        <th>Cantidad</th>
-							<th>Subtotal</th>
-							<th>Eliminar</th>
+							<th th:text="#{Text.producto.nombre}">Nombre del producto</th>
+	                        <th th:text="#{Text.producto.precio}">Precio</th>
+	                        <th th:text="#{Text.producto.cantidad}">Cantidad</th>
+							<th th:text="#{Text.producto.total}">Subtotal</th>
+							<th th:text="#{Text.general.acciones}">Acciones</th>
 						</tr>
 					</thead>
 					<tbody></tbody>
 					<tfoot class="table-info">
 						<tr>
-							<td colspan="4" class="text-end"><strong>Total a pagar:</strong></td>
+							<td colspan="4" class="text-end"><strong th:text="#{Text.producto.total} + ':'">Total a pagar:</strong></td>
 	                        <td colspan="2"><span id="total-pagar">$ 0</span></td>
 						</tr>
 					</tfoot>
@@ -51,8 +51,8 @@
 			</section>
 				
             <section class="d-flex align-items-center mt-5">
-				<input type="submit" th:value="${(factura.id != null && factura.id > 0) ? 'Editar factura' : 'Agregar factura'}" class="btn btn-primary" />
-				<a th:href="@{/listar}" class="btn btn-outline-primary ms-2">Volver al listado</a>
+				<input type="submit" th:value="#{Text.crud.crear}" class="btn btn-primary" />
+				<a th:href="@{/listar}" class="btn btn-outline-primary ms-2" th:text="#{Text.cliente.listar.btn}">Volver al listado</a>
 			</section>
 		</form>
 	</main>

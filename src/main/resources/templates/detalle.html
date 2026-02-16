@@ -49,7 +49,8 @@
 	                        <td th:text="${factura.fechaCreacion}"></td>
 							<td sec:authorize="hasRole('ROLE_ADMIN')">
 								<a th:href="@{/factura/detalle/} + ${factura.id}" class="btn btn-info btn-sm" th:text="#{Text.general.detalle}">Ver detalle</a>
-								<a th:href="@{/factura/eliminar/} + ${factura.id}" class="btn btn-danger btn-sm" onclick="return confirm('Está seguro que desea eliminar la factura?');" th:text="#{Text.crud.eliminar}">Eliminar factura</a>
+								<a th:href="@{/factura/eliminar/} + ${factura.id}" class="btn btn-danger btn-sm" 
+								   th:onclick="|return confirm('#{Text.factura.confirmar.eliminar}');|" th:text="#{Text.crud.eliminar}">Eliminar factura</a>
 							</td>
 						</tr>
 					</tbody>

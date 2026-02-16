@@ -1,10 +1,13 @@
 package com.tocttaviano.crudclientes.app.controllers;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,23 +38,26 @@ public class FacturaController {
 	private final IClienteService clienteService;
 	private final Logger logger = LoggerFactory.getLogger(FacturaController.class);
 	
+	@Autowired
+	private MessageSource messageSource;
+	
 	public FacturaController(IClienteService clienteService) {
 		this.clienteService = clienteService;
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/crear/{idCliente}")
-	public String crear(@PathVariable Long idCliente, Model model, RedirectAttributes mensajeria) {
+	public String crear(@PathVariable Long idCliente, Model model, RedirectAttributes mensajeria, Locale locale) {
 		Optional<Cliente> optCliente = clienteService.buscarPorId(idCliente);
 		if (optCliente.isEmpty()) {
-			mensajeria.addFlashAttribute("mensajeError", "No se ha encontrado al cliente especificado para crear la factura");
+			mensajeria.addFlashAttribute("mensajeError", messageSource.getMessage("Text.cliente.error.noEncontrado", null, locale));
 			return "redirect:/listar";
 		}
 		
 		Factura factura = new Factura();
 		factura.setCliente(optCliente.get());
 		
-		model.addAttribute("tituloPagina", "Crear factura");
+		model.addAttribute("tituloPagina", messageSource.getMessage("Text.factura.crear.titulo", null, locale));
 		model.addAttribute("factura", factura);
 		
 		return "factura/facturaForm";
@@ -72,20 +78,19 @@ public class FacturaController {
 			@RequestParam(name = "id_item[]", required = false) Long[] itemId,
 			@RequestParam(name = "cantidad[]", required = false) Integer[] cantidad,
 			RedirectAttributes mensajeria,
-			SessionStatus sessionStatus) 
-	{
-//		logger.info("Guardando factura - ITEM ID -> ", itemId);
-//		logger.info("Guardando factura - CANTIDADES -> ", cantidad);
+			SessionStatus sessionStatus,
+			Locale locale
+	) {
 		logger.info("Guardando factura - DATOS FACTURA -> ", factura);
 		
 		if (resultadoValidacion.hasErrors()) {
-			model.addAttribute("tituloPagina", "Crear factura");
+			model.addAttribute("tituloPagina", messageSource.getMessage("Text.factura.crear.titulo", null, locale));
 			return "factura/facturaForm";
 		}
 		
 		if (itemId == null || itemId.length == 0) {
-			model.addAttribute("tituloPagina", "Crear factura");
-			model.addAttribute("mensajeError", "La factura debe tener al menos un producto");
+			model.addAttribute("tituloPagina", messageSource.getMessage("Text.factura.crear.titulo", null, locale));
+			model.addAttribute("mensajeError", messageSource.getMessage("Text.factura.error.sinProductos", null, locale));
 			return "factura/facturaForm";
 		}
 		
@@ -107,20 +112,20 @@ public class FacturaController {
 		clienteService.guardarFactura(factura);
 		sessionStatus.setComplete();
 		
-		mensajeria.addFlashAttribute("mensajeExito", "Factura creada con éxito");
+		mensajeria.addFlashAttribute("mensajeExito", messageSource.getMessage("Text.factura.exito.crear", null, locale));
 		return "redirect:/listar";
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/detalle/{id}")
-	public String detalle(@PathVariable Long id, Model model, RedirectAttributes mensajeria) {
+	public String detalle(@PathVariable Long id, Model model, RedirectAttributes mensajeria, Locale locale) {
 		Optional<Factura> optFactura = clienteService.buscarFacturaPorId(id);
 		if (optFactura.isEmpty()) {
-			mensajeria.addFlashAttribute("mensajeError", "No se ha encontrado la factura especificada");
+			mensajeria.addFlashAttribute("mensajeError", messageSource.getMessage("Text.factura.error.noEncontrado", null, locale));
 			return "redirect:/listar";
 		}
 		
-		model.addAttribute("tituloPagina", "Detalle de factura");
+		model.addAttribute("tituloPagina", messageSource.getMessage("Text.factura.detalle.titulo", null, locale));
 		model.addAttribute("factura", optFactura.get());
 		
 		return "factura/detalle";
@@ -129,16 +134,16 @@ public class FacturaController {
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/eliminar/{id}")
-	public String eliminar(@PathVariable Long id, RedirectAttributes mensajeria) {
+	public String eliminar(@PathVariable Long id, RedirectAttributes mensajeria, Locale locale) {
 		Optional<Factura> optFactura = clienteService.buscarFacturaPorId(id);
 		if (optFactura.isEmpty()) {
-			mensajeria.addFlashAttribute("mensajeError", "No se ha encontrado la factura especificada para eliminar");
+			mensajeria.addFlashAttribute("mensajeError", messageSource.getMessage("Text.factura.error.noEncontrado", null, locale));
 			return "redirect:/listar";
 		}
 		
 		clienteService.eliminarFactura(id);
 		
-		mensajeria.addFlashAttribute("mensajeExito", "Factura eliminada con éxito");
+		mensajeria.addFlashAttribute("mensajeExito", messageSource.getMessage("Text.factura.exito.eliminar", null, locale));
 		return "redirect:/listar";
 	}
 	

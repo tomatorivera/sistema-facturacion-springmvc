@@ -38,7 +38,8 @@
 								<a th:href="@{/editar/} + ${cliente.id}" class="btn btn-warning" th:text="#{Text.crud.editar}">Editar cliente</a>
 							</td>
 							<td sec:authorize="hasRole('ROLE_ADMIN')">
-								<a th:href="@{/eliminar/} + ${cliente.id}" class="btn btn-danger" th:text="#{Text.crud.eliminar}" th:onclick="|return confirm('#{Text.cliente.confirmar.eliminar}');|">Eliminar cliente</a>
+								<a th:href="@{/eliminar/} + ${cliente.id}" class="btn btn-danger" th:text="#{Text.crud.eliminar}" 
+								   th:onclick="|return confirm('#{Text.cliente.confirmar.eliminar}');|">Eliminar cliente</a>
 							</td>
 							<td sec:authorize="hasRole('ROLE_ADMIN')">
 								<a th:href="@{/factura/crear/} + ${cliente.id}" class="btn btn-success" th:text="#{Text.factura.crud.crear}">Crear factura</a>

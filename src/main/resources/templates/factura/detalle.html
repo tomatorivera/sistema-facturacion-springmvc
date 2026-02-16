@@ -9,28 +9,28 @@
 	<section class="container">
         <div class="card mb-3">
             <div class="card-body">
-                <h5 class="card-title border-bottom mb-3">Factura #<span class="fw-bold" th:text="${factura.id}"></span></h5>
-                <p class="card-text mb-0"><strong>Cliente:</strong> <span th:text="${factura.cliente.nombre}"></span></p>
-                <p class="card-text mb-0"><strong>Fecha de creación:</strong> <span th:text="${#temporals.format(factura.fechaCreacion, 'dd/MM/yyyy HH:mm')}"></span></p>
-                <p class="card-text"><strong>Total:</strong> $<span th:text="${factura.total}"></span></p>
+                <h5 class="card-title border-bottom mb-3"><span th:text="#{Text.factura.numero}"></span> #<span class="fw-bold" th:text="${factura.id}"></span></h5>
+                <p class="card-text mb-0"><strong th:text="#{Text.factura.cliente} + ':'"></strong> <span th:text="${factura.cliente.nombre}"></span></p>
+                <p class="card-text mb-0"><strong th:text="#{Text.factura.fechaCreacion} + ':'"></strong> <span th:text="${#temporals.format(factura.fechaCreacion, 'dd/MM/yyyy HH:mm')}"></span></p>
+                <p class="card-text"><strong th:text="#{Text.factura.total} + ':'"></strong> $<span th:text="${factura.total}"></span></p>
             </div>
         </div>
 		
 		<div th:if="${factura.observacion != null && not #strings.isEmpty(factura.observacion)}" class="card mb-3">
 			<div class="card-body">
-                <h5 class="card-title border-bottom mb-3">Observaciones:</h5>
+                <h5 class="card-title border-bottom mb-3" th:text="#{Text.factura.observacion}">Observaciones:</h5>
                 <p class="card-text" th:text="${factura.observacion}"></p>
             </div>
 		</div>
 
-        <h3 class="fw-semibold border-bottom mt-4">Productos</h3>
+        <h3 class="fw-semibold border-bottom mt-4" th:text="#{Text.factura.listadoProductos}">Productos</h3>
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio Unitario</th>
-                    <th>Total</th>
+                    <th th:text="#{Text.producto.nombre}">Producto</th>
+                    <th th:text="#{Text.producto.cantidad}">Cantidad</th>
+                    <th th:text="#{Text.producto.precio}">Precio Unitario</th>
+                    <th th:text="#{Text.producto.total}">Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -44,8 +44,8 @@
         </table>
 
         <div class="d-flex align-items-center gap-2">
-			<a th:href="@{/detalle/} + ${factura.cliente.id}" class="btn btn-secondary">Volver al cliente</a>
-			<a th:href="@{/listar}" class="btn btn-outline-secondary">Volver al listado de productos</a>
+			<a th:text="#{Text.cliente.detalle.btn}" th:href="@{/detalle/} + ${factura.cliente.id}" class="btn btn-secondary">Volver al cliente</a>
+			<a th:text="#{Text.cliente.listar.btn}" th:href="@{/listar}" class="btn btn-outline-secondary">Volver al listado de clientes</a>
 		</div>
 	</section>
 		
