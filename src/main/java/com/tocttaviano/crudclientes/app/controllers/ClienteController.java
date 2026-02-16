@@ -27,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.tocttaviano.crudclientes.app.models.Cliente;
 import com.tocttaviano.crudclientes.app.services.IClienteService;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -86,7 +87,16 @@ public class ClienteController {
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/guardar")
-	public String crear(Model model, Locale locale) {
+	public String crear(Model model, Locale locale, HttpSession session, SessionStatus sessionStatus) {
+		// Al cambiar el idioma, puede realizarse una petición sin el ID del cliente
+		// Si el cliente permanece en la sesión, quiere decir que se lo estaba editando
+		// y en dado caso hago un forward a la URL correspondiente para continuar la operación
+		Cliente clienteActual = (Cliente) session.getAttribute("cliente");
+		if (!sessionStatus.isComplete() && clienteActual != null)
+		{
+			return "forward:/guardar/".concat(String.valueOf(clienteActual.getId()));
+		}
+			
 		model.addAttribute("cliente", new Cliente());
 		model.addAttribute("tituloPagina", messageSource.getMessage("Text.cliente.crear.titulo", null, locale));
 		return "clienteForm";

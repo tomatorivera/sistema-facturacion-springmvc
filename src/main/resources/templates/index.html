@@ -42,7 +42,7 @@
 								   th:onclick="|return confirm('#{Text.cliente.confirmar.eliminar}');|">Eliminar cliente</a>
 							</td>
 							<td sec:authorize="hasRole('ROLE_ADMIN')">
-								<a th:href="@{/factura/crear/} + ${cliente.id}" class="btn btn-success" th:text="#{Text.factura.crud.crear}">Crear factura</a>
+								<a th:href="@{/factura/guardar/} + ${cliente.id}" class="btn btn-success" th:text="#{Text.factura.crud.crear}">Crear factura</a>
 							</td>
 						</tr>
 					</tbody>
