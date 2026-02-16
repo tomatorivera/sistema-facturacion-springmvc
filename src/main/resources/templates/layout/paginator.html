@@ -6,11 +6,11 @@
         <ul class="pagination justify-content-center">
 
             <li class="page-item" th:classappend="${page.first} ? 'disabled'">
-                <a class="page-link" th:href="@{${url}(numeroPagina=0)}">&laquo; Primera</a>
+                <a class="page-link" th:href="@{${url}(numeroPagina=0)}" th:text="#{Text.paginator.primera}">&laquo; Primera</a>
             </li>
 
             <li class="page-item" th:classappend="${!page.hasPrevious()} ? 'disabled'">
-                <a class="page-link" th:href="@{${url}(numeroPagina=${page.number - 1})}">Anterior</a>
+                <a class="page-link" th:href="@{${url}(numeroPagina=${page.number - 1})}" th:text="#{Text.paginator.anterior}">Anterior</a>
             </li>
 
             <li class="page-item" 
@@ -20,11 +20,11 @@
             </li>
 
             <li class="page-item" th:classappend="${!page.hasNext()} ? 'disabled'">
-                <a class="page-link" th:href="@{${url}(numeroPagina=${page.number + 1})}">Siguiente</a>
+                <a class="page-link" th:href="@{${url}(numeroPagina=${page.number + 1})}" th:text="#{Text.paginator.siguiente}">Siguiente</a>
             </li>
 
             <li class="page-item" th:classappend="${page.last} ? 'disabled'">
-                <a class="page-link" th:href="@{${url}(numeroPagina=${page.totalPages - 1})}">Última &raquo;</a>
+                <a class="page-link" th:href="@{${url}(numeroPagina=${page.totalPages - 1})}" th:text="#{Text.paginator.ultima}">Última &raquo;</a>
             </li>
 
         </ul>

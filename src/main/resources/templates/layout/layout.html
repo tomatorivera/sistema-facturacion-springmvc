@@ -4,7 +4,7 @@
 <head th:fragment="head">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CRUD de Clientes</title>
+    <title>Sistema de facturación</title>
 	
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
 		  rel="stylesheet" 
@@ -16,31 +16,31 @@
 <body>
 	<nav class="navbar bg-dark border-bottom border-body navbar-expand-lg" data-bs-theme="dark" th:fragment="navbar">
 	  <section class="container">
-	    <a class="navbar-brand" href="#">CLIENTES-MVC</a>
+	    <a class="navbar-brand fw-bold" href="#">FACTURACIÓN</a>
 	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#clientesNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 	      <span class="navbar-toggler-icon"></span>
 	    </button>
 	    <div class="collapse navbar-collapse justify-content-between" id="clientesNav">
 	      <ul class="navbar-nav">
 	        <li class="nav-item">
-	          <a class="nav-link" th:href="@{/index}">Inicio</a>
+	          <a class="nav-link" th:href="@{/index}" th:text="#{Text.nav.inicio}">Inicio</a>
 	        </li>
 	        <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
-	          <a class="nav-link" th:href="@{/crear}">Nuevo cliente</a>
+	          <a class="nav-link" th:href="@{/crear}" th:text="#{Text.nav.nuevoCliente}">Nuevo cliente</a>
 	        </li>
 			<li class="nav-item dropdown">
-	          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	          <a class="nav-link dropdown-toggle" th:text="#{Text.nav.idioma}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 	            Idioma
 	          </a>
 	          <ul class="dropdown-menu">
 	            <li><a class="dropdown-item" th:href="@{/locale(lang=es_ES)}">Español</a></li>
-	            <li><a class="dropdown-item" th:href="@{/locale(lang=en_EN)}">Inglés</a></li>
+	            <li><a class="dropdown-item" th:href="@{/locale(lang=en_EN)}">English</a></li>
 	          </ul>
 	        </li>
 	      </ul>
 		  <ul class="navbar-nav navbar-right">
 			<li sec:authorize="!isAuthenticated()">
-				<a th:href="@{/login}" class="btn btn-primary">Iniciar sesión</a>
+				<a th:href="@{/login}" th:text="#{Text.nav.iniciarSesion}" class="btn btn-primary">Iniciar sesión</a>
 			</li>
 			<li sec:authorize="isAuthenticated()" class="nav-item dropdown">
               <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -49,7 +49,7 @@
               <ul class="dropdown-menu">
                 <li>
 					<form th:action="@{/logout}" method="post">
-                        <button type="submit" class="dropdown-item">Cerrar sesión</button>
+                        <button type="submit" th:text="#{Text.nav.cerrarSesion}" class="dropdown-item">Cerrar sesión</button>
 					</form>
 				</li>
               </ul>
@@ -70,7 +70,7 @@
 	
 	<footer class="bg-dark text-light text-center py-3 mt-5" th:fragment="footer">
         <p class="mb-0">By <strong>Tomas Octtaviano</strong></p>
-		<p class="mb-0" sec:authorize="isAuthenticated()">Bienvenido nuevamente <strong sec:authentication="name"></strong></p>
+		<p class="mb-0" sec:authorize="isAuthenticated()"><span th:text="#{Text.footer.bienvenida}">Bienvenido nuevamente</span> <strong sec:authentication="name"></strong></p>
 	</footer>
 	
 	<section th:fragment="scripts">
