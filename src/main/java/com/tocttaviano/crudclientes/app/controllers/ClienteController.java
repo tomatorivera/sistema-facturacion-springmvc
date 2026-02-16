@@ -86,15 +86,15 @@ public class ClienteController {
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/crear")
-	public String crear(Model model) {
+	public String crear(Model model, Locale locale) {
 		model.addAttribute("cliente", new Cliente());
-		model.addAttribute("tituloPagina", "Agregar cliente");
+		model.addAttribute("tituloPagina", messageSource.getMessage("Text.cliente.crear.titulo", null, locale));
 		return "clienteForm";
 	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/editar/{id}")
-	public String editar(@PathVariable Long id, Model model) {
+	public String editar(@PathVariable Long id, Model model, Locale locale) {
 		Optional<Cliente> optCliente = clienteService.buscarPorId(id);
 		if (optCliente.isEmpty()) {
 			logger.warn("Cliente con ID " + id + " no encontrado para edición.");
@@ -104,7 +104,7 @@ public class ClienteController {
 		Cliente cliente = optCliente.get();
 		logger.info("Cliente encontrado para edición: " + cliente);
 		model.addAttribute("cliente", cliente);
-		model.addAttribute("tituloPagina", "Editar cliente");
+		model.addAttribute("tituloPagina", messageSource.getMessage("Text.cliente.editar.titulo", null, locale));
 		return "clienteForm";
 	}
 	
@@ -116,24 +116,29 @@ public class ClienteController {
 			SessionStatus status, 
 			Model model, 
 			@RequestParam MultipartFile file,
-			RedirectAttributes mensajeria) 
+			RedirectAttributes mensajeria,
+			Locale locale) 
 	{
 		logger.info("Cliente entrante: " + cliente + " | Foto: " + (file != null ? file.getOriginalFilename() : "No se ha cargado una foto"));
 		if(result.hasErrors()) {
-			model.addAttribute("tituloPagina", (cliente.getId() != null && cliente.getId() > 0) ? "Editar cliente" : "Agregar cliente");
+			model.addAttribute("tituloPagina", (cliente.getId() != null && cliente.getId() > 0) 
+					? messageSource.getMessage("Text.cliente.editar.titulo", null, locale)
+					: messageSource.getMessage("Text.cliente.crear.titulo", null, locale));
 			return "clienteForm";
 		}
 		
 		try {
-			clienteService.guardar(cliente, file);
+			mensajeria.addFlashAttribute("mensajeExito", (cliente.getId() != null && cliente.getId() > 0) 
+					? messageSource.getMessage("Text.cliente.exito.editar", null, locale)
+					: messageSource.getMessage("Text.cliente.exito.crear", null, locale));
 			
-			mensajeria.addFlashAttribute("mensajeExito", (cliente.getId() != null && cliente.getId() > 0) ? "Cliente editado exitosamente" : "Cliente creado exitosamente");
+			clienteService.guardar(cliente, file);
 			status.setComplete();
 			
 			logger.info("Cliente guardado: " + cliente);
 			return "redirect:/index";
 		} catch (Exception e) {
-			mensajeria.addFlashAttribute("mensajeError", "Ha ocurrido un error de sistema guardando al cliente");
+			mensajeria.addFlashAttribute("mensajeError", messageSource.getMessage("Text.cliente.error.guardado", null, locale));
 			logger.error("Error al guardar el cliente: " + e.getMessage());
 			e.printStackTrace();
 			return "redirect:/index";
@@ -142,22 +147,22 @@ public class ClienteController {
 	
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/eliminar/{id}")
-	public String eliminar(@PathVariable Long id, RedirectAttributes mensajeria) {
+	public String eliminar(@PathVariable Long id, RedirectAttributes mensajeria, Locale locale) {
 		Optional<Cliente> optCliente = clienteService.buscarPorId(id);
 		if (optCliente.isEmpty()) {
 			logger.warn("Cliente con ID " + id + " no encontrado para eliminación.");
-			mensajeria.addFlashAttribute("mensajeError", "No se ha encontrado al cliente especificado para eliminar");
+			mensajeria.addFlashAttribute("mensajeError", messageSource.getMessage("Text.cliente.error.noEncontrado", null, locale));
 			return "redirect:/index";
 		}
 		
 		try 
 		{
 			clienteService.eliminar(optCliente.get());
-			mensajeria.addFlashAttribute("mensajeExito", "Cliente eliminado exitosamente");	
+			mensajeria.addFlashAttribute("mensajeExito", messageSource.getMessage("Text.cliente.exito.eliminar", null, locale));	
 		} 
 		catch (IOException e) 
 		{
-			mensajeria.addFlashAttribute("mensajeError", "Ha ocurrido un error de sistema eliminando al cliente");
+			mensajeria.addFlashAttribute("mensajeError", messageSource.getMessage("Text.cliente.error.eliminar", null, locale));
 			logger.error("Error al eliminar el cliente: " + e.getMessage());
 			e.printStackTrace();	
 		}

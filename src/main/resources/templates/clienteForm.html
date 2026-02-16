@@ -8,26 +8,26 @@
 	<main class="container mt-3">
 		<form id="form-cliente" th:action="@{/guardar}" th:object="${cliente}" method="POST" enctype="multipart/form-data">
 			<section class="mb-3">
-				<label for="nombre" class="form-label">Nombre:</label>
+				<label for="nombre" class="form-label" th:text="#{Text.cliente.nombre} + ':'">Nombre:</label>
 				<input th:field="*{nombre}" class="form-control" required maxlength="45" />
 				<span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-danger"></span>
 			</section>
 			<section class="mb-3">
-				<label for="apellido" class="form-label">Apellido:</label>
+				<label for="apellido" class="form-label" th:text="#{Text.cliente.apellido} + ':'">Apellido:</label>
 				<input th:field="*{apellido}" class="form-control" required maxlength="45" />
 				<span th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}" class="text-danger"></span>
 			</section>
 			<section class="mb-3">
-				<label for="email" class="form-label">Email:</label>
+				<label for="email" class="form-label" th:text="#{Text.cliente.email} + ':'">Email:</label>
 				<input type="email" th:field="*{email}" class="form-control" required maxlength="45" />
 				<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></span>
 			</section>
 			<section class="mb-3">
-				<label for="file" class="form-label">Foto:</label>
+				<label for="file" class="form-label" th:text="#{Text.cliente.foto} + ':'">Foto:</label>
 				<input type="file" name="file" id="file" class="form-control" />
 				<!-- <span th:if="${#fields.hasErrors('foto')}" th:errors="*{foto}" class="text-danger"></span> -->
 			</section>
-			<input type="submit" th:value="${(cliente.id != null && cliente.id > 0) ? 'Editar' : 'Agregar'}" class="btn btn-primary" />
+			<input type="submit" th:value="${(cliente.id != null && cliente.id > 0)} ? #{Text.crud.editar} : #{Text.crud.crear}" class="btn btn-primary" />
 		</form>
 	</main>
 	
