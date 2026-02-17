@@ -80,7 +80,7 @@ public class ClienteController {
 		}
 		
 		Cliente cliente = optCliente.get();
-		model.addAttribute("cliente", cliente);
+		model.addAttribute("clienteDetalle", cliente);
 		model.addAttribute("tituloPagina", messageSource.getMessage("Text.cliente.detalle.titulo", null, locale));
 		return "detalle";
 	}
@@ -92,7 +92,7 @@ public class ClienteController {
 		// Si el cliente permanece en la sesión, quiere decir que se lo estaba editando
 		// y en dado caso hago un forward a la URL correspondiente para continuar la operación
 		Cliente clienteActual = (Cliente) session.getAttribute("cliente");
-		if (!sessionStatus.isComplete() && clienteActual != null)
+		if (!sessionStatus.isComplete() && clienteActual != null && (clienteActual.getId() != null && clienteActual.getId() > 0))
 		{
 			return "forward:/guardar/".concat(String.valueOf(clienteActual.getId()));
 		}
